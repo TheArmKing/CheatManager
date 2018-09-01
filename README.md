@@ -14,11 +14,11 @@ Invoke Script by typing CM.sh or CheatManager or iOSM in Terminal, or Open the C
 4) You can always track the modded version by you and the AppStore version 
 
 # Help
-Update List - Check for the current AppStore version of the App
-Change Entry - You can either add/remove/update a game in your list
-Add Entry - Add a game that you hacked to your list, enter its bundle ID or iTunes ID
-Remove Entry - if you are discontinuing support for a game and dont want it in the list anymore
-Update Entry - When you update the Game Cheat, you this option so that the list records the Cheat is up to date
+1) Update List - Check for the current AppStore version of the App
+2) Change Entry - You can either add/remove/update a game in your list
+3) Add Entry - Add a game that you hacked to your list, enter its bundle ID or iTunes ID
+4) Remove Entry - if you are discontinuing support for a game and dont want it in the list anymore
+5) Update Entry - When you update the Game Cheat, you this option so that the list records the Cheat is up to date
 
 # Speed 
 Extremely Fast! takes 0.1 Seconds to get app details and process them, it is 10x Faster than the Android version thanks to Apple's exclusive iTunes Search API
