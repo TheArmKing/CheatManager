@@ -24,5 +24,5 @@ else
         echo -en "\x1B[1;49;92mxmlstarlet is installed!\x1B[0m"
 fi
 sleep 0.3
-echo -en "\nDone! Invoke Script by typing CM.sh or CheatManager or iOSMdM in Terminal, or Open the CheatManager.app in the Desktop Folder\n"
+echo -en "\nDone! Invoke Script by typing CM.sh or CheatManager or iOSM in Terminal, or Open the CheatManager.app in the Desktop Folder\n"
 rm -rf $SCRIPTPATH
