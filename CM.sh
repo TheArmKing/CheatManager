@@ -136,46 +136,48 @@ while (( !all  )); do
                   if [ "$ide" == "quit" ]; then
                     exd=1
                   fi
-                  if [[ "$ide" =~ ^[0-9]+$ ]]; then
-                    sen="$(curl -s "http://itunes.apple.com/lookup?id=$ide")"
-                    wet="$(echo "$sen" | grep '"bundleId"')"
-                    kle="$(echo "$wet" | awk 'gsub(/.*"bundleId":"|",.*/,"")')"
-                    zeb="$(grep "<app id=\"$kle\">" $HOME/Library/CheatManager/Main.xml)"
-                    if [ "$kle" != "" ]; then
-                      id="$kle"
-                      kenk=1
+                  if [ "$exd" -eq 0 ]; then
+                    if [[ "$ide" =~ ^[0-9]+$ ]]; then
+                      sen="$(curl -s "http://itunes.apple.com/lookup?id=$ide")"
+                      wet="$(echo "$sen" | grep '"bundleId"')"
+                      kle="$(echo "$wet" | awk 'gsub(/.*"bundleId":"|",.*/,"")')"
+                      zeb="$(grep "<app id=\"$kle\">" $HOME/Library/CheatManager/Main.xml)"
+                      if [ "$kle" != "" ]; then
+                        id="$kle"
+                        kenk=1
+                      else
+                        kenk=0
+                      fi
                     else
-                      kenk=0
+                      sen="$(curl -s "http://itunes.apple.com/lookup?bundleId=$ide")"
+                      went="$(echo "$sen" | grep '"resultCount"')"
+                      kenk="$(echo "$went" | awk 'gsub(/.*"resultCount":|\,.*/,"")')"
+                      zeb="$(grep "<app id=\"$ide\">" $HOME/Library/CheatManager/Main.xml)"
+                      if [ "$kenk" -gt "0" ]; then
+                        id="$ide"
+                      fi
                     fi
-                  else
-                    sen="$(curl -s "http://itunes.apple.com/lookup?bundleId=$ide")"
-                    went="$(echo "$sen" | grep '"resultCount"')"
-                    kenk="$(echo "$went" | awk 'gsub(/.*"resultCount":|\,.*/,"")')"
-                    zeb="$(grep "<app id=\"$ide\">" $HOME/Library/CheatManager/Main.xml)"
                     if [ "$kenk" -gt "0" ]; then
-                      id="$ide"
+                      if [ "$zeb" == "" ] && [ "$exd" -eq 0 ]; then
+                        update_vers "$sen" WN
+                        echo "<app id=\"$id\">" >> /tmp/prep.txt
+                        echo "<name>$nem</name>" >> /tmp/prep.txt
+                        echo "<mversion>$vers</mversion>" >> /tmp/prep.txt
+                        echo "<cversion>$vers</cversion>" >> /tmp/prep.txt
+                        echo "</app>" >> /tmp/prep.txt
+                        lmn="$(grep "</MM>" $HOME/Library/CheatManager/Main.xml | cut -f1 -d:)"
+                        xdsg="$(expr $lem -1)"
+                        ed -s $HOME/Library/CheatManager/Main.xml <<< "${xdsg}r "/tmp/prep.txt""$'\nw'
+                        rm /tmp/prep.txt
+                        clear
+                        echo "Updated List:"
+                        make_list NV
+                      elif [ "$exd" -eq 0 ] && [ "$zeb" != "" ] ; then
+                        echo ALREDY
+                      fi
+                    else
+                      echo "Invalid Bundle ID"
                     fi
-                  fi
-                  if [ "$kenk" -gt "0" ]; then
-                    if [ "$zeb" == "" ] && [ "$exd" -eq 0 ]; then
-                      update_vers "$sen" WN
-                      echo "<app id=\"$id\">" >> /tmp/prep.txt
-                      echo "<name>$nem</name>" >> /tmp/prep.txt
-                      echo "<mversion>$vers</mversion>" >> /tmp/prep.txt
-                      echo "<cversion>$vers</cversion>" >> /tmp/prep.txt
-                      echo "</app>" >> /tmp/prep.txt
-                      lmn="$(grep "</MM>" $HOME/Library/CheatManager/Main.xml | cut -f1 -d:)"
-                      xdsg="$(expr $lem -1)"
-                      ed -s $HOME/Library/CheatManager/Main.xml <<< "${xdsg}r "/tmp/prep.txt""$'\nw'
-                      rm /tmp/prep.txt
-                      clear
-                      echo "Updated List:"
-                      make_list NV
-                    elif [ "$exd" -eq 0 ] && [ "$zeb" != "" ] ; then
-                      echo ALREDY
-                    fi
-                  else
-                    echo "Invalid Bundle ID"
                   fi
                 done
                 break
@@ -221,7 +223,6 @@ while (( !all  )); do
                       hol="${ary[mci]}"
                       get_id "$hol"
                       update_vers "$idee" "kol"
-                      echo "$mci" "$hol" "$idee" "$vers"
                       echo -e "cd /MM/app[name=\"$hol\"]/mversion\nset $vers\nsave" | xmllint --shell $HOME/Library/CheatManager/Main.xml >&-
                       echo -e "cd /MM/app[name=\"$hol\"]/cversion\nset $vers\nsave" | xmllint --shell $HOME/Library/CheatManager/Main.xml >&-
                       echo -en "\n\x1B[0;49;32mUpdated List\x1B[0m\n"
@@ -247,7 +248,7 @@ while (( !all  )); do
         done
         break
       elif [ "$opt" == "Help" ]; then
-        echo -en "\n\x1B[1;49;94mHow to invoke\x1B[0m: CheatManager, CM.sh, iOSM, or open the CheatManager.app\n\n\x1B[1;49;94mUsage\x1B[0m:-\n\x1B[1;49;39mUpdate List\x1B[0m - Check for the current Play Store version of the App\n\x1B[1;49;39mChange Entry\x1B[0m - You can either add/remove/update a game in your list\n\x1B[1;49;39mAdd Entry\x1B[0m - Add a game that you hacked to your list, enter its bundle ID\n\x1B[1;49;39mRemove Entry\x1B[0m - if you are discontinuing support for a game and dont want it in the list anymore\n\x1B[1;49;39mUpdate Entry\x1B[0m - When you update the Game Cheat, you this option so that the list records the Cheat is up to date\n\n"
+        echo -en "\n\x1B[1;49;94mHow to invoke\x1B[0m: CheatManager, CM.sh, iOSM, or open the CheatManager.app\n\n\x1B[1;49;94mUsage\x1B[0m:-\n\x1B[1;49;39mUpdate List\x1B[0m - Check for the current AppStore version of the App\n\x1B[1;49;39mChange Entry\x1B[0m - You can either add/remove/update a game in your list\n\x1B[1;49;39mAdd Entry\x1B[0m - Add a game that you hacked to your list, enter its bundle ID or iTunes ID\n\x1B[1;49;39mRemove Entry\x1B[0m - if you are discontinuing support for a game and dont want it in the list anymore\n\x1B[1;49;39mUpdate Entry\x1B[0m - When you update the Game Cheat, you this option so that the list records the Cheat is up to date\n\n"
         break
       elif [ "$opt" == "Quit" ]; then
         exit
