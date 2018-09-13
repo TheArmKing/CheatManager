@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 unzip $SCRIPTPATH/CheatManager.app.zip
-mv $HOME/CheatManager.app.zip $HOME/Desktop/CheatManager.app.zip
+mv $HOME/CheatManager.app $HOME/Desktop/CheatManager.app
 cp $SCRIPTPATH/CM.sh /usr/local/bin/CM.sh
 chmod +x /usr/local/bin/MM.sh
 ln -s /usr/local/bin/CM.sh /usr/local/bin/CheatManager
